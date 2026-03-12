@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-nginx-2-pinger-pod
+  namespace: jiyean-ns
+  labels:
+    app: my-nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+
+  - name: http-pinger # 컨테이너 이름: 헬스체크용
+    image: busybox # 경량 이미지 (wget 포함)
+    command: ['sh', '-c', 'while true; do wget -qO- http://localhost:80; sleep 5; done'] # 쉘 스크립트 실행
+  
+  # 스크립트 내용(참고만):
+  # while true: 무한 루프
+  # wget -qO- http://localhost:80: 80포트 GET 요청 (quiet, output 버리기)
+  # sleep 5: 5초 대기 후 반복
+  # → nginx 헬스체크 (Pod 준비성 확인)

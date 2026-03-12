@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # name: 클러스터 내에서 Service 명은 url주소(엔드포인트)로 사용된다.
+  # ex) http://my-service:포트번호
+  name: my-service
+  namespace: jiyean-ns
+spec:
+  type : ClusterIP # 내부 통신 전용 설정 (기본값, 외부 노출 X)
+  ports:
+  - port: 80 # 서비스의 포트(http통신에서 80은 생략 가능), (클러스터 내부용)
+    targetPort: 80 # Pod파드 내 가야하는 컨테이너의 내부 포트(하나의 파드에 여러 컨테이너가 떠있을 수 있으므로 필요한 설정)
+  selector:
+    app: my-nginx # labels.app=nginx인 Pod들로 트래픽 라우팅(Pod의 label과 매핑)

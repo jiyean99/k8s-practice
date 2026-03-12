@@ -1,0 +1,17 @@
+apiVersion: v1
+# kind: 자원의 종류를 Pod로 사용 (자원종류: Pod, Service, ReplicaSet 등)
+kind: Pod 
+metadata:
+  # name: 네임스페이스 내에서 유일해야 함
+  name: my-nginx-1
+  # namespace: Pod 배포할 네임스페이스 (기본값: default)
+  namespace: jiyean-ns 
+  # labels: Service→Pod 라우팅 시 선택자(selector)로 사용, 같은 label이 붙은 여러개의 Pod 생성 가능.
+  labels:
+    app: my-nginx
+spec:
+  containers:
+  - name: nginx # 컨테이너 이름 (로깅/관리용)
+    image: nginx # 사용할 Docker 이미지, 별도의 버전 명시 없으면 latest로 설치됨
+    ports: # 컨테이너 내부 포트 (Service와 매핑)
+    - containerPort: 80
