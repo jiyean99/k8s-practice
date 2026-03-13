@@ -36,7 +36,7 @@ spec:
           value: "CONTROLLER"
 
         - name: KAFKA_CONTROLLER_QUORUM_VOTERS
-          value: "1@kafka:9093"
+          value: "1@kafka-service:9093"
 
         - name: KAFKA_LOG_DIRS
           value: "/tmp/kraft-combined-logs"

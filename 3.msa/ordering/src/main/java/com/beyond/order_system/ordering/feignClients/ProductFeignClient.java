@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  *  3) 편의성 ↑: 자동 응답 형변환 + 예외 처리 간편화
 **/
 // url 부분은 k8s의 서비스명
-@Profile("local")
+@Profile("prod")
 @FeignClient(name = "product-service", url="${product.service.url:}")
 public interface ProductFeignClient {
     @GetMapping("/product/detail/{id}")
