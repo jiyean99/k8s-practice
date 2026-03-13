@@ -1,0 +1,34 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.8'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.beyond'
+version = '0.0.1-SNAPSHOT'
+description = '주문 서비스 - 유레카 서버'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+    // eureka-server 의존성추가
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+}
+
+// Spring Cloud Version에 대한 별도 설정 필요
+dependencyManagement{
+    imports{
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:2024.0.0'
+    }
+}
+tasks.named('test') {
+	useJUnitPlatform()
+}

@@ -1,0 +1,55 @@
+plugins {
+	id 'java'
+    id 'org.springframework.boot' version '3.4.8'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.beyond'
+version = '0.0.1-SNAPSHOT'
+description = '주문 서비스 - 상품 서버'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    implementation 'software.amazon.awssdk:s3:2.29.50'
+
+    // redis 연결작업 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // 마이크로서비스
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'  // Eureka 서비스 등록/발견
+
+    // 재고감소 비동기처리를 위한 kafka관련 의존성추가
+    implementation 'org.springframework.kafka:spring-kafka'
+}
+
+dependencyManagement{
+    imports{
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:2024.0.0'
+    }
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

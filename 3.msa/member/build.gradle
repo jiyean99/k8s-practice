@@ -1,0 +1,57 @@
+plugins {
+	id 'java'
+    id 'org.springframework.boot' version '3.4.8'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.beyond'
+version = '0.0.1-SNAPSHOT'
+description = '주문 서비스 - 회원 서버'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+    // Spring Boot 기본 기능
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // JPA/Hibernate 데이터 접근
+    implementation 'org.springframework.boot:spring-boot-starter-web'  // REST API 웹 서버
+    implementation 'org.springframework.boot:spring-boot-starter-validation'  // 입력 검증 (Bean Validation)
+
+    // DB 연결
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'  // MariaDB JDBC 드라이버
+    compileOnly 'org.projectlombok:lombok'  // Lombok 코드 축약
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // 보안 (JWT)
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'  // JWT 토큰 생성/검증 [web:17]
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // 캐싱
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'  // Redis 연동
+
+    // 마이크로서비스
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'  // Eureka 서비스 등록/발견
+
+    // 테스트
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// Spring Cloud Version에 대한 별도 설정 필요
+dependencyManagement{
+    imports{
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:2024.0.0'
+    }
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
